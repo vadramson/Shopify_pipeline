@@ -104,7 +104,7 @@ Make sure you are at the root and initialise the Airflow instance with the airfl
 	docker-compose up airflow-init
 This pulls all the images and create all the services listed in the docker-compose file, it will take a few minutes the first time. This initialising all the containers, creates a database shopify_db, and creates three schemas(***raw, staging, analytics***) within the database. 
 
-![Initialise Airflow screen](https)
+![Initialise Airflow screen](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.52.52.png)
 
 After initializing the Airflow instance, you can now run all the services listed in the docker-compose file using the command. 
 
