@@ -12,11 +12,7 @@ load_dotenv()
 #DATABASE_URL = os.getenv('DB_CONNECTION_STRING') # Local Connection
 
 DATABASE_URL = os.getenv('DB_CONNECTION_STRING_STREAMLIT') # Docker Conection
-# Get the port from environment variable or default to 8501
-port = os.getenv('STREAMLIT_PORT', '8501')
 
-# Streamlit configuration
-st.set_option('server.port', port)
 
 # Database connection
 def get_data(query):
