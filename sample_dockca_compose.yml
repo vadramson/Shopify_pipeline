@@ -1,0 +1,97 @@
+version: '3'
+
+services:
+  # Airflow services
+  airflow-webserver:
+    image: apache/airflow:2.6.0
+    container_name: airflow-webserver
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__CORE__FERNET_KEY=your_fernet_key
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__CELERY__BROKER_URL=redis://redis:6379/0
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres:5432/airflow
+    volumes:
+      - ./airflow-docker/dags:/opt/airflow/dags
+      - ./airflow-docker/logs:/opt/airflow/logs
+      - ./airflow-docker/plugins:/opt/airflow/plugins
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - airflow-network
+
+  airflow-scheduler:
+    image: apache/airflow:2.6.0
+    container_name: airflow-scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__CORE__FERNET_KEY=your_fernet_key
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__CELERY__BROKER_URL=redis://redis:6379/0
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres:5432/airflow
+    volumes:
+      - ./airflow-docker/dags:/opt/airflow/dags
+      - ./airflow-docker/logs:/opt/airflow/logs
+      - ./airflow-docker/plugins:/opt/airflow/plugins
+    depends_on:
+      - airflow-webserver
+      - postgres
+      - redis
+    networks:
+      - airflow-network
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - airflow-network
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - ./airflow-docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./airflow-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - airflow-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./airflow-docker/server.json:/pgadmin4/servers.json
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - airflow-network
+
+  # Pandas App Container
+  pandas-app:
+    build:
+      context: ./pandas-app
+      dockerfile: Dockerfile
+    container_name: pandas-app
+    depends_on:
+      - postgres
+    networks:
+      - airflow-network
+
+networks:
+  airflow-network:
+    driver: bridge
