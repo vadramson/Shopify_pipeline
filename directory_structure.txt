@@ -1,0 +1,72 @@
+.
+├── README.md
+├── airflow-docker
+│   ├── dags
+│   ├── docker-compose.yml
+│   ├── init-db.sh
+│   ├── init.sql
+│   ├── logs
+│   │   ├── dag_processor_manager
+│   │   │   └── dag_processor_manager.log
+│   │   └── scheduler
+│   │       ├── 2024-09-10
+│   │       ├── 2024-09-11
+│   │       └── latest -> /opt/airflow/logs/scheduler/2024-09-11
+│   ├── pgadmin
+│   │   ├── azurecredentialcache
+│   │   ├── pgadmin4.db
+│   │   ├── sessions
+│   │   │   ├── 21013273-efb6-45a9-84f3-9f6e7340fc93
+│   │   │   ├── 41d427a1-e344-4896-8906-a5265cac17dd
+│   │   │   ├── 50fb95f8-7b9f-425b-b146-aa69f6157da9
+│   │   │   ├── 58739954-77b7-4a9b-85f6-feff142cdf9f
+│   │   │   ├── 83861c14-d0cd-49b5-bace-91a0c22cc605
+│   │   │   ├── 92f4d6ae-923c-4f47-9cdc-acf01a6e5902
+│   │   │   ├── aaf52afd-8f81-4c6c-99d9-e3295c39b68a
+│   │   │   ├── aba4d90e-3480-4f68-8612-b3f94ee8b223
+│   │   │   ├── ba400de4-67e3-486e-9fa3-e485e45a83a0
+│   │   │   ├── bdb81b7a-d4ad-4941-ae8f-e4533508fbc9
+│   │   │   ├── e922a801-9dfd-444c-a9f8-1eb8d5f36dcb
+│   │   │   ├── f35aa834-432a-4041-890c-2289a478d9fa
+│   │   │   ├── f3af86c1-d3b1-4b22-ac0d-1504aef2bdce
+│   │   │   └── f3ca6b91-de12-4ee7-b60e-504a7e6e0f56
+│   │   └── storage
+│   ├── plugins
+│   └── servers.json
+├── directory_structure.txt
+└── pandas
+    ├── Dockerfile
+    ├── docker-compose.yml
+    ├── main.py
+    ├── pytest.ini
+    ├── requirements.txt
+    ├── src
+    │   ├── __init__.py
+    │   ├── __pycache__
+    │   │   ├── __init__.cpython-310.pyc
+    │   │   ├── __init__.cpython-312.pyc
+    │   │   ├── __init__.cpython-39.pyc
+    │   │   ├── config.cpython-310.pyc
+    │   │   ├── config.cpython-312.pyc
+    │   │   ├── config.cpython-39.pyc
+    │   │   ├── data_processing.cpython-310.pyc
+    │   │   ├── data_processing.cpython-39.pyc
+    │   │   ├── database_operations.cpython-310.pyc
+    │   │   └── database_operations.cpython-39.pyc
+    │   ├── config.py
+    │   ├── data_processing.py
+    │   └── database_operations.py
+    ├── streamlit_analytics.py
+    └── tests
+        ├── __pycache__
+        │   ├── test_config.cpython-310-pytest-8.0.0.pyc
+        │   ├── test_config.cpython-39-pytest-8.3.3.pyc
+        │   ├── test_data_processing.cpython-310-pytest-8.0.0.pyc
+        │   ├── test_data_processing.cpython-39-pytest-8.3.3.pyc
+        │   ├── test_database_operations.cpython-310-pytest-8.0.0.pyc
+        │   └── test_database_operations.cpython-39-pytest-8.3.3.pyc
+        ├── test_config.py
+        ├── test_data_processing.py
+        └── test_database_operations.py
+
+18 directories, 52 files

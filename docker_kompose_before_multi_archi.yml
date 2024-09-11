@@ -62,9 +62,9 @@ x-airflow-common:
     AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true' # "_run_image of the DockerOperator returns now a python string, not a byte string" Ref: https://github.com/apache/airflow/issues/13487
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
   volumes:
-    - ./airflow-docker/dags:/opt/airflow/dags
-    - ./airflow-docker/logs:/opt/airflow/logs
-    - ./airflow-docker/plugins:/opt/airflow/plugins
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
     - "/var/run/docker.sock:/var/run/docker.sock" # Passing the Docker Deamon as a volume to allow the webserver containers start docker images. Ref: https://stackoverflow.com/q/51342810/7024760
   #user: "${AIRFLOW_UID:-50000}:0"
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
@@ -74,8 +74,6 @@ x-airflow-common:
       condition: service_healthy
     postgres:
       condition: service_healthy
-  networks:
-      - airflow-network
 
 services:
   postgres:
@@ -85,18 +83,16 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     ports:
-      - "5431:5432" # Binding host machine's port 5431 to containers postgres port 5432 to avoid conflicting ports   
+      - "5431:5432"    
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
-      - ./airflow-docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh  # Mount the initialization script
-      - ./airflow-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh  # Mount the initialization script
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 5s
       retries: 5
     restart: always
-    networks:
-      - airflow-network
 
   redis:
     image: redis:latest
@@ -108,16 +104,12 @@ services:
       timeout: 30s
       retries: 50
     restart: always
-    networks:
-      - airflow-network
 
   airflow-webserver:
     <<: *airflow-common
     command: webserver
     ports:
       - 8080:8080
-    env_file:
-      - .env  
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 10s
@@ -128,8 +120,6 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-    
-
 
   airflow-scheduler:
     <<: *airflow-common
@@ -243,8 +233,8 @@ services:
           echo "   https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#before-you-begin"
           echo
         fi
-        mkdir -p /sources/airflow-docker/logs /sources/airflow-docker/dags /sources/airflow-docker/plugins
-        chown -R "${AIRFLOW_UID}:0" /sources/airflow-docker/{logs,dags,plugins}
+        mkdir -p /sources/logs /sources/dags /sources/plugins
+        chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
         exec /entrypoint airflow version
     # yamllint enable rule:line-length
     environment:
@@ -296,31 +286,9 @@ services:
       - "5050:80"  # Expose pgAdmin on port 5050 http://localhost:5050
     volumes:
       - ./pgadmin:/var/lib/pgadmin  
-      - ./airflow-docker/servers.json:/pgadmin4/servers.json  # Mount the servers.json file
+      - ./servers.json:/pgadmin4/servers.json  # Mount the servers.json file
     depends_on:
       - postgres  
-    networks:
-      - airflow-network  
-
-  # Pandas App Container
-  pandas-app:
-    build:
-      context: ./pandas-app
-      dockerfile: Dockerfile
-    container_name: pandas-app
-    depends_on:
-      - postgres
-    ports:
-      - "8502:8501"  # Map host port 8502 to container port 8501 for streamlit  
-    networks:
-      - airflow-network
-    command: tail -f /dev/null  # Keeps the pandas-app container idle until triggered
-  
-
 
 volumes:
   postgres-db-volume:
-
-networks:
-  airflow-network:
-    driver: bridge  
