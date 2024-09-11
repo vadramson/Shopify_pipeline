@@ -46,6 +46,9 @@ USER airflow
 
 
 # Container Entry point to execute the container
-CMD [ "python", "main.py"]
+#CMD [ "python", "main.py"]
+
+CMD ["sh", "-c", "exec $COMMAND"]
+
 
 

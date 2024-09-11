@@ -310,6 +310,8 @@ services:
     container_name: pandas-app
     depends_on:
       - postgres
+    ports:
+      - "8502:8501"  # Map host port 8502 to container port 8501 for streamlit  
     networks:
       - airflow-network
     command: tail -f /dev/null  # Keeps the pandas-app container idle until triggered
