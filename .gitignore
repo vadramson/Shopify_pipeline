@@ -28,6 +28,7 @@ MANIFEST
 airflow-docker/pgadmin
 airflow-docker/logs
 airflow-docker/pgadmin.db
+pgadmin
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
