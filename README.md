@@ -104,18 +104,21 @@ Make sure you are at the root and initialise the Airflow instance with the airfl
 	docker-compose up airflow-init
 This pulls all the images and create all the services listed in the docker-compose file, it will take a few minutes the first time. This initialising all the containers, creates a database shopify_db, and creates three schemas(***raw, staging, analytics***) within the database. 
 
-![Initialise Airflow screen](https)
+![Initialise Airflow screen](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.52.52.png)
 
 After initializing the Airflow instance, you can now run all the services listed in the docker-compose file using the command. 
 
 	docker-compose up
 
-![running_airflow](https)
+![running_airflow](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.53.43.png)
+
+![Connected](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.54.03.png)
 
 This starts all the services
 
 #### To check which services are running, enter the command 
 	docker ps
+ 
 Once all services are healthy, you can now open your browser and go to
 
 	http://localhost:8080/home
@@ -123,7 +126,7 @@ Once all services are healthy, you can now open your browser and go to
 The following page should be display 
 
 
-![airflowLogin](https)
+![airflowLogin](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.57.44.png)
 
 
 Enter the username and password as specified in the docker-compose file and login, default is **username**: *airflow*, **password**: *airflow*
@@ -131,7 +134,7 @@ Enter the username and password as specified in the docker-compose file and logi
 
 The following screen should be displayed
 
-![Connected](https)
+![Connected](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.58.34.png)
 
 What you see are the existing Dags.
 
@@ -141,29 +144,30 @@ http://localhost:5050/browser/
 
 You should see this displayed
 
-![pgadminlogin](http)
+![pgadminlogin](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2022.02.15.png)
 
 You will be required to enter a password to connect to pgAdmin and to the Postgres Group server fist enter default is **pgAdmin Password**: *admin*,  then **server group password**: *airflow*
 
 You should now have access to the databases, explore the contents of the shopify_database.
 
-![pgadminlogin](http)
 
-You can now proceed in running a dag
+*You can now proceed in running a dag*
 
 Head back to the airflow tab on your browser and click on the dag,  Run_Shopify_Complete_ELT_Pandas, and then on graph, you should see the dag display as in the image below. There are 3 dags, the first one runs all the tests, the second one runs the pipeline and the third one runs a Streamlit file that connects to the database and display an analytics dashboard of the data ingested data.
 
-![complete](http)
+![complete](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2022.15.23.png)
 
 Click the run button and if all the tests cases succeed, then the pipeline will be run and eventually the streamlit file. You can access the streamlit file by going to this link.
 
+http://localhost:8501/
+
 You should see this display, if there are no conflicting ports.
 
-![streamlit_dashboard](http)
+![streamlit_dashboard](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2022.33.44.png)
 
 You can head back to the pgAdmin tab to see the data in the **shopify_configs** table.
 
-![data_in_table](http)
+![data_in_table](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2022.26.31.png)
 
 **NB:** 
 
