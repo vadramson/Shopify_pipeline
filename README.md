@@ -1,6 +1,8 @@
-# Shopify Data Pipeline FYI: Read the FYI at the end for the .env file
+# Shopify Data Pipeline 
 
 ## Overview
+_FYI: Read the FYI at the end for the .env file_
+
 This repository contains a Python-based data pipeline for processing daily Shopify configurations. The pipeline is designed to:
 
 1. **Extract**: Download a CSV file from an S3 bucket.
