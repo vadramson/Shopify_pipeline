@@ -1,7 +1,7 @@
 # Shopify Data Pipeline 
 
 ## Overview
-_FYI: Read the FYI at the end for the .env file_
+_FYI: Read the NB at the end of the page to know why you see the .env file_
 
 This repository contains a Python-based data pipeline for processing daily Shopify configurations. The pipeline is designed to:
 
