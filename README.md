@@ -110,12 +110,15 @@ After initializing the Airflow instance, you can now run all the services listed
 
 	docker-compose up
 
-![running_airflow](https)
+![running_airflow](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.53.43.png)
+
+![Connected](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.54.03.png)
 
 This starts all the services
 
 #### To check which services are running, enter the command 
 	docker ps
+ 
 Once all services are healthy, you can now open your browser and go to
 
 	http://localhost:8080/home
@@ -123,7 +126,7 @@ Once all services are healthy, you can now open your browser and go to
 The following page should be display 
 
 
-![airflowLogin](https)
+![airflowLogin](https://github.com/vadramson/Shopify_pipeline/blob/main/img/Screenshot%202024-09-11%20at%2021.57.44.png)
 
 
 Enter the username and password as specified in the docker-compose file and login, default is **username**: *airflow*, **password**: *airflow*
