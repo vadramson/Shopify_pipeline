@@ -1,0 +1,5 @@
+CREATE DATABASE shopify_db;
+\c shopify_db
+CREATE SCHEMA raw AUTHORIZATION airflow;
+CREATE SCHEMA staging AUTHORIZATION airflow;
+CREATE SCHEMA analytics AUTHORIZATION airflow;
